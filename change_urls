@@ -1,0 +1,24 @@
+import hudson.model.*;
+import hudson.plugins.git.*
+import hudson.plugins.git.browser.*
+ 
+def view = Hudson.instance.getView("vista_XXX")
+def myRepoUrl = "http://server/gitlist/repo.git"
+ 
+for(item in view.getItems())
+{
+ 
+	def SCM = item.getScm()
+	if(SCM instanceof GitSCM ) {
+	println (item.getName());
+	def browser = SCM.getBrowser();
+		if (browser){
+			println browser.getUrl()
+		}
+		else
+		{
+			browser = new GitLab( myRepoUrl, "5.4");
+			SCM.browser = browser
+		}
+	}
+}
